@@ -18,6 +18,12 @@
 .globl xmp16Assert
 .global xmp16Assert.nstackwords
 .linkset xmp16Assert.nstackwords, 0
+.global xmp16Assert.maxtimers
+.linkset xmp16Assert.maxtimers, 0
+.global xmp16Assert.maxchanends
+.linkset xmp16Assert.maxchanends, 0
+.global xmp16Assert.maxthreads
+.linkset xmp16Assert.maxthreads, 1
 .align 4
 xmp16Assert:
   ecallf r0
@@ -28,6 +34,12 @@ xmp16Assert:
 .globl getChanend
 .global getChanend.nstackwords
 .linkset getChanend.nstackwords, 0
+.global getChanend.maxtimers
+.linkset getChanend.maxtimers, 0
+.global getChanend.maxchanends
+.linkset getChanend.maxchanends, 1
+.global getChanend.maxthreads
+.linkset getChanend.maxthreads, 1
 .align 4
 getChanend:
 	getr r1,2
@@ -42,6 +54,12 @@ retGetChanend:
 .globl getRemoteChanendId
 .global getRemoteChanendId.nstackwords
 .linkset getRemoteChanendId.nstackwords, 0
+.global getRemoteChanendId.maxtimers
+.linkset getRemoteChanendId.maxtimers, 0
+.global getRemoteChanendId.maxchanends
+.linkset getRemoteChanendId.maxchanends, 0
+.global getRemoteChanendId.maxthreads
+.linkset getRemoteChanendId.maxthreads, 1
 .align 4
 getRemoteChanendId:
 	getd r0,res[r0]
@@ -52,6 +70,12 @@ getRemoteChanendId:
 .globl getLocalChanendId
 .global getLocalChanendId.nstackwords
 .linkset getLocalChanendId.nstackwords, 0
+.global getLocalChanendId.maxtimers
+.linkset getLocalChanendId.maxtimers, 0
+.global getLocalChanendId.maxchanends
+.linkset getLocalChanendId.maxchanends, 0
+.global getLocalChanendId.maxthreads
+.linkset getLocalChanendId.maxthreads, 1
 .align 4
 getLocalChanendId:
 	retsp 0
@@ -61,6 +85,12 @@ getLocalChanendId:
 .globl outUint
 .global outUint.nstackwords
 .linkset outUint.nstackwords, 0
+.global outUint.maxtimers
+.linkset outUint.maxtimers, 0
+.global outUint.maxchanends
+.linkset outUint.maxchanends, 0
+.global outUint.maxthreads
+.linkset outUint.maxthreads, 1
 .align 4
 outUint:
 	//bl closeChanend
@@ -78,6 +108,12 @@ outUint:
 .globl outByte
 .global outByte.nstackwords
 .linkset outByte.nstackwords, 0
+.global outByte.maxtimers
+.linkset outByte.maxtimers, 0
+.global outByte.maxchanends
+.linkset outByte.maxchanends, 0
+.global outByte.maxthreads
+.linkset outByte.maxthreads, 1
 .align 4
 outByte:
 	//bl closeChanend
@@ -94,6 +130,12 @@ outByte:
 .globl inUint
 .global inUint.nstackwords
 .linkset inUint.nstackwords, 0
+.global inUint.maxtimers
+.linkset inUint.maxtimers, 0
+.global inUint.maxchanends
+.linkset inUint.maxchanends, 0
+.global inUint.maxthreads
+.linkset inUint.maxthreads, 1
 .align 4
 inUint:
 //	chkct res[r0],1
@@ -109,6 +151,12 @@ inUint:
 .globl inByte
 .global inByte.nstackwords
 .linkset inByte.nstackwords, 0
+.global inByte.maxtimers
+.linkset inByte.maxtimers, 0
+.global inByte.maxchanends
+.linkset inByte.maxchanends, 0
+.global inByte.maxthreads
+.linkset inByte.maxthreads, 1
 .align 4
 inByte:
 //	chkct res[r0],1
@@ -124,6 +172,12 @@ inByte:
 .globl closeChanend
 .global closeChanend.nstackwords
 .linkset closeChanend.nstackwords, 0
+.global closeChanend.maxtimers
+.linkset closeChanend.maxtimers, 0
+.global closeChanend.maxchanends
+.linkset closeChanend.maxchanends, 0
+.global closeChanend.maxthreads
+.linkset closeChanend.maxthreads, 1
 .align 4
 /* Tear down a channel, highest channel identifier goes first */
 closeChanend:
@@ -144,6 +198,12 @@ closeEnd:
 .globl getLocalAnonChanend
 .global getLocalAnonChanend.nstackwords
 .linkset getLocalAnonChanend.nstackwords, 0
+.global getLocalAnonChanend.maxtimers
+.linkset getLocalAnonChanend.maxtimers, 0
+.global getLocalAnonChanend.maxchanends
+.linkset getLocalAnonChanend.maxchanends, 0
+.global getLocalAnonChanend.maxthreads
+.linkset getLocalAnonChanend.maxthreads, 1
 .align 4
 getLocalAnonChanend:
 	getr r0,0x2
