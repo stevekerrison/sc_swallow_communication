@@ -62,6 +62,7 @@
 	
 void xmp16Assert(unsigned assertion);
 unsigned getChanend(unsigned dst);
+void setDestination(chanend c, unsigned dst);
 unsigned getLocalAnonChanend();
 unsigned write_sswitch_reg_no_ack_clean(unsigned node, unsigned reg, unsigned val);
 unsigned write_sswitch_reg_clean(unsigned node, unsigned reg, unsigned val);

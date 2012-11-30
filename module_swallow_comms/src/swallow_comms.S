@@ -50,6 +50,22 @@ retGetChanend:
 	retsp 0
 .cc_bottom getChanend.elim
 
+.cc_top setDestination.elim, setDestination
+.globl setDestination
+.global setDestination.nstackwords
+.linkset setDestination.nstackwords, 0
+.global setDestination.maxtimers
+.linkset setDestination.maxtimers, 0
+.global setDestination.maxchanends
+.linkset setDestination.maxchanends, 0
+.global setDestination.maxthreads
+.linkset setDestination.maxthreads, 1
+.align 4
+setDestination:
+	setd res[r0],r1
+	retsp 0
+.cc_bottom setDestination.elim
+
 .cc_top getRemoteChanendId.elim, getRemoteChanendId
 .globl getRemoteChanendId
 .global getRemoteChanendId.nstackwords
