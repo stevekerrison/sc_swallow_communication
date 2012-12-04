@@ -59,7 +59,16 @@
 #define streamInWord(c,w)	asm("in %0,res[%1]":"=r"(w):"r"(c));
 #define closeInStream(c)	asm("chkct res[%0],1\n" \
 	"outct res[%0],1" :: "r"(c));
+#define streamSetDestination(c,d) asm("setd res[%0],%1"::"r"(c),"r"(d))
 	
+#ifdef __XC__
+int startTransactionClient(chanend c, unsigned dst, char format, unsigned length);
+void endTransactionClient(chanend c);
+
+void startTransactionServer(streaming chanend c, unsigned &dst, unsigned &format, unsigned &length);
+void endTransactionServer(streaming chanend c);
+#endif //__XC__
+
 void xmp16Assert(unsigned assertion);
 unsigned getChanend(unsigned dst);
 void setDestination(chanend c, unsigned dst);

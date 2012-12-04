@@ -226,3 +226,108 @@ getLocalAnonChanend:
 	retsp 0x0
 .cc_bottom getLocalAnonChanend.elim
 
+.cc_top startTransactionClient.elim, startTransactionClient
+.globl startTransactionClient
+.global startTransactionClient.nstackwords
+.linkset startTransactionClient.nstackwords, 0
+.global startTransactionClient.maxtimers
+.linkset startTransactionClient.maxtimers, 0
+.global startTransactionClient.maxchanends
+.linkset startTransactionClient.maxchanends, 0
+.global startTransactionClient.maxthreads
+.linkset startTransactionClient.maxthreads, 1
+.align 4
+startTransactionClient:
+  entsp 0x1
+	stw r4,sp[0]
+	setd res[r0],r1
+	out res[r0],r0
+	testct r4,res[r0]
+	bt r4,transactionClientShouldBackoff
+	in r4,res[r0]
+	eq r1,r4,r1
+	ecallf r1
+	outt res[r0],r2
+	out res[r0],r3
+	ldw r4,sp[0]
+	ldc r0,1
+	retsp 0x1
+transactionClientShouldBackoff:
+  chkct res[r0],0x1
+  outct res[r0],0x1
+	ldw r4,sp[0]
+	ldc r0,0
+	retsp 0x1
+.cc_bottom startTransactionClient.elim
+
+.cc_top pauseTransactionClient.elim, pauseTransactionClient
+.globl pauseTransactionClient
+.global pauseTransactionClient.nstackwords
+.linkset pauseTransactionClient.nstackwords, 0
+.global pauseTransactionClient.maxtimers
+.linkset pauseTransactionClient.maxtimers, 0
+.global pauseTransactionClient.maxchanends
+.linkset pauseTransactionClient.maxchanends, 0
+.global pauseTransactionClient.maxthreads
+.linkset pauseTransactionClient.maxthreads, 1
+.align 4
+pauseTransactionClient:
+	outct res[r0],0x1
+	chkct res[r0],0x1
+	retsp 0x0
+.cc_bottom pauseTransactionClient.elim
+
+.cc_top resumeTransactionClient.elim, resumeTransactionClient
+.globl resumeTransactionClient
+.global resumeTransactionClient.nstackwords
+.linkset resumeTransactionClient.nstackwords, 0
+.global resumeTransactionClient.maxtimers
+.linkset resumeTransactionClient.maxtimers, 0
+.global resumeTransactionClient.maxchanends
+.linkset resumeTransactionClient.maxchanends, 0
+.global resumeTransactionClient.maxthreads
+.linkset resumeTransactionClient.maxthreads, 1
+.align 4
+resumeTransactionClient:
+	setd res[r0],r1
+	out res[r0],r0
+	in r2,res[r0]
+	eq r1,r2,r1
+	ecallf r1
+	retsp 0x0
+.cc_bottom resumeTransactionClient.elim
+
+.cc_top endTransactionClient.elim, endTransactionClient
+.globl endTransactionClient
+.global endTransactionClient.nstackwords
+.linkset endTransactionClient.nstackwords, 0
+.global endTransactionClient.maxtimers
+.linkset endTransactionClient.maxtimers, 0
+.global endTransactionClient.maxchanends
+.linkset endTransactionClient.maxchanends, 0
+.global endTransactionClient.maxthreads
+.linkset endTransactionClient.maxthreads, 1
+.align 4
+endTransactionClient:
+	outct res[r0],0x1
+	chkct res[r0],0x1
+	retsp 0x0
+.cc_bottom endTransactionClient.elim
+
+.cc_top endTransactionServer.elim, endTransactionServer
+.globl endTransactionServer
+.global endTransactionServer.nstackwords
+.linkset endTransactionServer.nstackwords, 0
+.global endTransactionServer.maxtimers
+.linkset endTransactionServer.maxtimers, 0
+.global endTransactionServer.maxchanends
+.linkset endTransactionServer.maxchanends, 0
+.global endTransactionServer.maxthreads
+.linkset endTransactionServer.maxthreads, 1
+.align 4
+endTransactionServer:
+	chkct res[r0],0x1
+	outct res[r0],0x1
+	retsp 0x0
+.cc_bottom endTransactionServer.elim
+
