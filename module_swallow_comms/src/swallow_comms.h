@@ -65,8 +65,12 @@
 int startTransactionClient(chanend c, unsigned dst, char format, unsigned length);
 void endTransactionClient(chanend c);
 
+#pragma select handler
 void startTransactionServer(streaming chanend c, unsigned &dst, unsigned &format, unsigned &length);
 void endTransactionServer(streaming chanend c);
+
+
+unsigned getLocalStreamingChanendId(streaming chanend c);
 #endif //__XC__
 
 void xmp16Assert(unsigned assertion);

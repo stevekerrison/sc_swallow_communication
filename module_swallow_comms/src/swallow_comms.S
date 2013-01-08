@@ -97,6 +97,21 @@ getLocalChanendId:
 	retsp 0
 .cc_bottom getLocalChanendId.elim
 
+.cc_top getLocalStreamingChanendId.elim, getLocalStreamingChanendId
+.globl getLocalStreamingChanendId
+.global getLocalStreamingChanendId.nstackwords
+.linkset getLocalStreamingChanendId.nstackwords, 0
+.global getLocalStreamingChanendId.maxtimers
+.linkset getLocalStreamingChanendId.maxtimers, 0
+.global getLocalStreamingChanendId.maxchanends
+.linkset getLocalStreamingChanendId.maxchanends, 0
+.global getLocalStreamingChanendId.maxthreads
+.linkset getLocalStreamingChanendId.maxthreads, 1
+.align 4
+getLocalStreamingChanendId:
+	retsp 0
+.cc_bottom getLocalStreamingChanendId.elim
+
 .cc_top outUint.elim, outUint
 .globl outUint
 .global outUint.nstackwords
