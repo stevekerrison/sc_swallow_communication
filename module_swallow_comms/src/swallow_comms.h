@@ -64,10 +64,12 @@
 #ifdef __XC__
 int startTransactionClient(chanend c, unsigned dst, char format, unsigned length);
 void endTransactionClient(chanend c);
+void fixupChanNode(chanend c);
 
 #pragma select handler
 void startTransactionServer(streaming chanend c, unsigned &dst, unsigned &format, unsigned &length);
 void endTransactionServer(streaming chanend c);
+void fixupStreamingChanNode(streaming chanend c);
 
 
 unsigned getLocalStreamingChanendId(streaming chanend c);
