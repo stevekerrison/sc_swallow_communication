@@ -48,5 +48,8 @@ unsigned write_sswitch_reg_clean(unsigned node, unsigned reg, unsigned val)
 
 void freeChanend(unsigned c)
 {
-	asm("freer res[%0]"::"r"(c));
+  if (c)
+  {
+	  asm("freer res[%0]"::"r"(c));
+	}
 }
