@@ -78,7 +78,7 @@
 #define closeInStream(c)	asm("chkct res[%0],1\n" \
 	"outct res[%0],1" :: "r"(c));
 #define streamSetDestination(c,d) asm("setd res[%0],%1"::"r"(c),"r"(d))
-#define swallow_lookup(row,col)  ((row << SWXLB_VPOS) | (col << SWXLB_LPOS))
+#define swallow_lookup(row,col)  ((row << SWXLB_HPOS) | (col << SWXLB_LPOS))
 #define swallow_id(ref,cols) swallow_lookup((ref)/(cols),(ref)%(cols))
 	
 #ifdef __XC__
