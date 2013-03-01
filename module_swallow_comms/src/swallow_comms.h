@@ -82,6 +82,7 @@ extern unsigned sw_nrows, sw_ncols;
 #define streamSetDestination(c,d) asm("setd res[%0],%1"::"r"(c),"r"(d))
 #define swallow_lookup(row,col)  ((row << SWXLB_HPOS) | (col << SWXLB_LPOS))
 #define swallow_id(ref) swallow_lookup((ref)/(sw_ncols),(ref)%(sw_ncols))
+#define swallow_cvt_chanend(ce) ((swallow_id(ce >> 16) << 16) | (ce & 0xffff))
 	
 #ifdef __XC__
 int startTransactionClient(chanend c, unsigned dst, char format, unsigned length);
