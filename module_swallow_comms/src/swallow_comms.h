@@ -61,6 +61,8 @@
 	#define chanend unsigned
 #endif
 
+extern unsigned sw_nrows, sw_ncols;
+
 /* We can't have streaming chanends because it would make MC-SC conversion too
  * complicated right now, so instead we provide these helpers. A block of
  * stream{Out,In}{Byte,Word} calls should be surrounded by open{In,Out}Stream
@@ -79,7 +81,7 @@
 	"outct res[%0],1" :: "r"(c));
 #define streamSetDestination(c,d) asm("setd res[%0],%1"::"r"(c),"r"(d))
 #define swallow_lookup(row,col)  ((row << SWXLB_HPOS) | (col << SWXLB_LPOS))
-#define swallow_id(ref,cols) swallow_lookup((ref)/(cols),(ref)%(cols))
+#define swallow_id(ref) swallow_lookup((ref)/(sw_ncols),(ref)%(sw_ncols))
 	
 #ifdef __XC__
 int startTransactionClient(chanend c, unsigned dst, char format, unsigned length);

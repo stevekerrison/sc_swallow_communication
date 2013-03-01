@@ -15,6 +15,8 @@
 #include <xs1.h>
 #include "swallow_comms.h"
 
+unsigned sw_nrows, sw_ncols;
+
 void fixupChanNode(chanend c)
 {
   unsigned oldid = getLocalChanendId(c);
