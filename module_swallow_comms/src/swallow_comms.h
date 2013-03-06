@@ -52,6 +52,7 @@
 #define SWXLB_CORES_CHIP          2
 #define SWXLB_CORES_BOARD         (SWXLB_CHIPS_W * SWXLB_CHIPS_H * SWXLB_CORES_CHIP)
 #define SWXLB_MAX_CORES           COUNT_FROM_BITS(SWXLB_LBITS + SWXLB_HBITS + SWXLB_VBITS)
+#define SWXLB_BOOT_ID             0x8001
 
 /* Names change, behaviour doesn't */
 #define swallowAssert xmp16Assert
