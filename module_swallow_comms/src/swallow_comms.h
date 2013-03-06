@@ -83,12 +83,13 @@ extern unsigned sw_nrows, sw_ncols;
 #define swallow_lookup(row,col)  ((row << SWXLB_HPOS) | (col << SWXLB_LPOS))
 #define swallow_id(ref) swallow_lookup((ref)/(sw_ncols),(ref)%(sw_ncols))
 #define swallow_cvt_chanend(ce) ((swallow_id(ce >> 16) << 16) | (ce & 0xffff))
-	
+
 #ifdef __XC__
 int startTransactionClient(chanend c, unsigned dst, char format, unsigned length);
 void endTransactionClient(chanend c);
 void fixupChanNode(chanend c);
 
+#ifndef MCMAIN
 #pragma select handler
 void startTransactionServer(streaming chanend c, unsigned &dst, unsigned &format, unsigned &length);
 void endTransactionServer(streaming chanend c);
@@ -96,6 +97,7 @@ void fixupStreamingChanNode(streaming chanend c);
 
 
 unsigned getLocalStreamingChanendId(streaming chanend c);
+#endif
 #endif //__XC__
 
 void xmp16Assert(unsigned assertion);
