@@ -86,9 +86,8 @@ extern unsigned sw_nrows, sw_ncols;
 #define swallow_cvt_chanend(ce) ((swallow_id(ce >> 16) << 16) | (ce & 0xffff))
 
 #ifdef __XC__
-int startTransactionClient(chanend c, unsigned dst, char format, unsigned length);
-void endTransactionClient(chanend c);
-void fixupChanNode(chanend c);
+int startTransactionClient(streaming chanend c, unsigned dst, char format, unsigned length);
+void endTransactionClient(streaming chanend c);
 
 #ifndef MCMAIN
 #pragma select handler
