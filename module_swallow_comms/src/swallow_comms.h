@@ -97,6 +97,7 @@ void fixupStreamingChanNode(streaming chanend c);
 
 
 unsigned getLocalStreamingChanendId(streaming chanend c);
+unsigned getRemoteStreamingChanendId(streaming chanend c);
 #endif
 #endif //__XC__
 

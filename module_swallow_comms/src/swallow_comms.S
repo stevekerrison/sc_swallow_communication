@@ -82,6 +82,22 @@ getRemoteChanendId:
 	retsp 0
 .cc_bottom getRemoteChanendId.elim
 
+.cc_top getRemoteStreamingChanendId.elim, getRemoteStreamingChanendId
+.globl getRemoteStreamingChanendId
+.global getRemoteStreamingChanendId.nstackwords
+.linkset getRemoteStreamingChanendId.nstackwords, 0
+.global getRemoteStreamingChanendId.maxtimers
+.linkset getRemoteStreamingChanendId.maxtimers, 0
+.global getRemoteStreamingChanendId.maxchanends
+.linkset getRemoteStreamingChanendId.maxchanends, 0
+.global getRemoteStreamingChanendId.maxthreads
+.linkset getRemoteStreamingChanendId.maxthreads, 1
+.align 4
+getRemoteStreamingChanendId:
+	getd r0,res[r0]
+	retsp 0
+.cc_bottom getRemoteStreamingChanendId.elim
+
 .cc_top getLocalChanendId.elim, getLocalChanendId
 .globl getLocalChanendId
 .global getLocalChanendId.nstackwords
