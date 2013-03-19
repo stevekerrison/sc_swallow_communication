@@ -48,14 +48,3 @@ void fixupStreamingChanNode(streaming chanend c)
     }
   }
 }
-
-void startTransactionServer(streaming chanend c, unsigned &dst, unsigned &format, unsigned &length)
-{
-  asm("in %3,res[%2]\n"
-    "setd res[%2],%3\n"
-    "out res[%2],%2\n"
-    "int %0,res[%2]\n"
-    "in %1,res[%2]\n"
-    :"=r"(format),"=r"(length):"r"(c),"r"(dst));
-  return;
-}

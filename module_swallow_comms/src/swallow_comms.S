@@ -345,6 +345,33 @@ endTransactionClient:
 	retsp 0x0
 .cc_bottom endTransactionClient.elim
 
+.cc_top startTransactionServer.elim, startTransactionServer
+.globl startTransactionServer
+.global startTransactionServer.nstackwords
+.linkset startTransactionServer.nstackwords, 0
+.global startTransactionServer.maxtimers
+.linkset startTransactionServer.maxtimers, 0
+.global startTransactionServer.maxchanstarts
+.linkset startTransactionServer.maxchanstarts, 0
+.global startTransactionServer.maxthreads
+.linkset startTransactionServer.maxthreads, 1
+.align 4
+startTransactionServer:
+  entsp 0x1
+  stw r4,sp[0]
+  in r4,res[r0]
+  setd res[r0],r1
+  out res[r0],r0
+  stw r4,r1[0]
+  int r4,res[r0]
+  stw r4,r2[0]
+  in r4,res[r0]
+  stw r4,r3[0]
+  ldw r4,sp[0]
+	retsp 0x1
+.cc_bottom startTransactionServer.elim
+
+
 .cc_top endTransactionServer.elim, endTransactionServer
 .globl endTransactionServer
 .global endTransactionServer.nstackwords
