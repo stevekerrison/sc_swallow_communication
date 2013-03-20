@@ -273,8 +273,8 @@ startTransactionClient:
 	stw r4,sp[0]
 	setd res[r0],r1
 	out res[r0],r0
-	testct r4,res[r0]
-	bt r4,transactionClientShouldBackoff
+/*	testct r4,res[r0]
+	bt r4,transactionClientShouldBackoff*/
 	in r4,res[r0]
 	eq r1,r4,r1
 	ecallf r1
@@ -360,7 +360,7 @@ startTransactionServer:
   entsp 0x1
   stw r4,sp[0]
   in r4,res[r0]
-  setd res[r0],r1
+  setd res[r0],r4
   out res[r0],r0
   stw r4,r1[0]
   int r4,res[r0]
