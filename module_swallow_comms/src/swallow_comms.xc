@@ -20,7 +20,7 @@ unsigned sw_nrows, sw_ncols;
 #pragma unsafe arrays
 unsigned _write_intercept(streaming chanend tx, char buf[], unsigned len)
 {
-  unsigned ret, offset = 0, dst = 0x80010302;
+  unsigned offset = 0, dst = 0x80010302;
   int i;
   asm("getr %0,0x2"::"r"(tx));
   while (len)
@@ -34,8 +34,7 @@ unsigned _write_intercept(streaming chanend tx, char buf[], unsigned len)
     endTransactionClient(tx);
   }
   asm("freer res[%0]"::"r"(tx));
-  asm("mkmsk %0,0x20":"=r"(ret));
-  return ret;
+  return 0;
 }
 
 void io_redirect(void)
