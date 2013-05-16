@@ -84,12 +84,13 @@ extern unsigned sw_nrows, sw_ncols;
 #define swallow_lookup(row,col)  ((row << SWXLB_VPOS) | (col << SWXLB_LPOS))
 #define swallow_id(ref) swallow_lookup((ref)/(sw_ncols),(ref)%(sw_ncols))
 #define swallow_cvt_chanend(ce) ((swallow_id(ce >> 16) << 16) | (ce & 0xffff))
+#define IO_REDIRECT_BUF 128
 
 #ifdef __XC__
-int startTransactionClient(streaming chanend c, unsigned dst, char format, unsigned length);
-void endTransactionClient(streaming chanend c);
 
 #ifndef MCMAIN
+int startTransactionClient(streaming chanend c, unsigned dst, char format, unsigned length);
+void endTransactionClient(streaming chanend c);
 #pragma select handler
 void startTransactionServer(streaming chanend c, unsigned &dst, unsigned &format, unsigned &length);
 void endTransactionServer(streaming chanend c);
@@ -101,6 +102,7 @@ unsigned getRemoteStreamingChanendId(streaming chanend c);
 #endif
 #endif //__XC__
 
+void io_redirect(void);
 void xmp16Assert(unsigned assertion);
 unsigned getChanend(unsigned dst);
 void setDestination(chanend c, unsigned dst);

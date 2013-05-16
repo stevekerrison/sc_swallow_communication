@@ -17,6 +17,56 @@
 
 unsigned sw_nrows, sw_ncols;
 
+#pragma unsafe arrays
+unsigned _write_intercept(streaming chanend tx, char buf[], unsigned len)
+{
+  unsigned ret, offset = 0, dst = 0x80010302;
+  int i;
+  asm("getr %0,0x2"::"r"(tx));
+  while (len)
+  {
+    startTransactionClient(tx,dst,1,len > IO_REDIRECT_BUF ? IO_REDIRECT_BUF : len);
+    for (i = 0; i < IO_REDIRECT_BUF && len; i += 1, len--)
+    {
+      tx <: buf[i + offset];
+    }
+    offset = i;
+    endTransactionClient(tx);
+  }
+  asm("freer res[%0]"::"r"(tx));
+  asm("mkmsk %0,0x20":"=r"(ret));
+  return ret;
+}
+
+void io_redirect(void)
+{
+  unsigned tgt,rpl;
+  unsigned instr;
+  int offset;
+  asm("ldap r11,_write\n"
+    "mov %0,r11\n"
+    "ldap r11,_write_intercept\n"
+    "mov %1,r11\n"
+    :"=r"(tgt),"=r"(rpl)::"r11");
+  offset = rpl - tgt - 4;
+  if (offset > 0)
+  {
+    offset >>= 1;
+    instr = 0xf0007300;
+  }
+  else
+  {
+    offset = -offset;
+    offset >>= 1;
+    instr = 0xf0007700;
+  }
+  instr |=  ((offset << 10) & 0x03ff0000) | (offset & 0x3f);
+  asm("st16 %0,%1[%2]\n"
+    "st16 %3,%1[%4]\n"::"r"(instr >> 16),"r"(tgt),"r"(0),"r"(instr),"r"(1));
+  return;
+}
+
+
 void fixupChanNode(chanend c)
 {
   unsigned oldid = getLocalChanendId(c);
