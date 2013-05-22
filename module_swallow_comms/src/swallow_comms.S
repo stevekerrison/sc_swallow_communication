@@ -11,7 +11,7 @@
  * University of Illinois/NCSA Open Source License posted in
  * LICENSE.txt and at <http://github.xcore.com/>
  */
-
+ 
 .section .text
 
 .cc_top xmp16Assert.elim, xmp16Assert
@@ -260,7 +260,7 @@ getLocalAnonChanend:
 .cc_top startTransactionClient.elim, startTransactionClient
 .globl startTransactionClient
 .global startTransactionClient.nstackwords
-.linkset startTransactionClient.nstackwords, 0
+.linkset startTransactionClient.nstackwords, 3
 .global startTransactionClient.maxtimers
 .linkset startTransactionClient.maxtimers, 0
 .global startTransactionClient.maxchanends
@@ -269,8 +269,8 @@ getLocalAnonChanend:
 .linkset startTransactionClient.maxthreads, 1
 .align 4
 startTransactionClient:
-  entsp 0x1
-	stw r4,sp[0]
+  entsp 0x2
+	stw r4,sp[1]
 	setd res[r0],r1
 	out res[r0],r0
 /*	testct r4,res[r0]
@@ -280,15 +280,15 @@ startTransactionClient:
 	ecallf r1
 	outt res[r0],r2
 	out res[r0],r3
-	ldw r4,sp[0]
+	ldw r4,sp[1]
 	ldc r0,1
-	retsp 0x1
+	retsp 0x2
 transactionClientShouldBackoff:
   chkct res[r0],0x1
   outct res[r0],0x1
-	ldw r4,sp[0]
+	ldw r4,sp[1]
 	ldc r0,0
-	retsp 0x1
+	retsp 0x2
 .cc_bottom startTransactionClient.elim
 
 .cc_top pauseTransactionClient.elim, pauseTransactionClient
@@ -348,7 +348,7 @@ endTransactionClient:
 .cc_top startTransactionServer.elim, startTransactionServer
 .globl startTransactionServer
 .global startTransactionServer.nstackwords
-.linkset startTransactionServer.nstackwords, 0
+.linkset startTransactionServer.nstackwords, 3
 .global startTransactionServer.maxtimers
 .linkset startTransactionServer.maxtimers, 0
 .global startTransactionServer.maxchanstarts
@@ -358,7 +358,7 @@ endTransactionClient:
 .align 4
 startTransactionServer:
   entsp 0x1
-  stw r4,sp[0]
+  stw r4,sp[1]
   in r4,res[r0]
   setd res[r0],r4
   out res[r0],r0
@@ -367,7 +367,7 @@ startTransactionServer:
   stw r4,r2[0]
   in r4,res[r0]
   stw r4,r3[0]
-  ldw r4,sp[0]
+  ldw r4,sp[1]
 	retsp 0x1
 .cc_bottom startTransactionServer.elim
 
@@ -389,3 +389,76 @@ endTransactionServer:
 	retsp 0x0
 .cc_bottom endTransactionServer.elim
 
+.cc_top _write_intercept_asm.elim, _write_intercept_asm
+.globl _write_intercept_asm
+.global _write_intercept_asm.nstackwords
+.linkset _write_intercept_asm.nstackwords, 0
+.global _write_intercept_asm.maxtimers
+.linkset _write_intercept_asm.maxtimers, 0
+.global _write_intercept_asm.maxchanends
+.linkset _write_intercept_asm.maxchanends, 0
+.global _write_intercept_asm.maxthreads
+.linkset _write_intercept_asm.maxthreads, 1
+.align 4
+_write_intercept_asm:
+  stw r0,dp[_write_intercept_heap+4]
+  stw r1,dp[_write_intercept_heap+8]
+  stw r2,dp[_write_intercept_heap+12]
+  stw r3,dp[_write_intercept_heap+16]
+  stw r4,dp[_write_intercept_heap+20]
+  stw r5,dp[_write_intercept_heap+24]
+  stw r6,dp[_write_intercept_heap+28]
+  stw r7,dp[_write_intercept_heap+32]
+  stw r8,dp[_write_intercept_heap+36]
+  stw r9,dp[_write_intercept_heap+40]
+  stw r10,dp[_write_intercept_heap+44]
+  stw r11,dp[_write_intercept_heap+48]
+  ldc r3,0x8001
+  ldc r4,0x0302
+  shl r3,r3,16
+  or r3,r3,r4
+  getr r0,2
+  setd res[r0],r3
+  out res[r0],r0
+	in r4,res[r0]
+	eq r3,r4,r3
+	ecallf r3
+	ldc r3,1
+	outt res[r0],r3
+	out res[r0],r2
+	ldc r3,0
+_write_intercept_loop:
+  ld8u r4,r1[r3]
+  outt res[r0],r4
+  add r3,r3,1
+  lsu r4,r3,r2
+  bt r4,_write_intercept_loop
+_write_intercept_end:
+  outct res[r0],0x1
+	chkct res[r0],0x1
+	freer res[r0]
+  ldw r0,dp[_write_intercept_heap+4]
+  ldw r1,dp[_write_intercept_heap+8]
+  ldw r2,dp[_write_intercept_heap+12]
+  ldw r3,dp[_write_intercept_heap+16]
+  ldw r4,dp[_write_intercept_heap+20]
+  ldw r5,dp[_write_intercept_heap+24]
+  ldw r6,dp[_write_intercept_heap+28]
+  ldw r7,dp[_write_intercept_heap+32]
+  ldw r8,dp[_write_intercept_heap+36]
+  ldw r9,dp[_write_intercept_heap+40]
+  ldw r10,dp[_write_intercept_heap+44]
+  ldw r11,dp[_write_intercept_heap+48]
+  ldc r0,0
+  retsp 0x0
+.cc_bottom _write_intercept_asm.elim
+
+
+
+
+.section .dp.data, "awd", @progbits
+.globl _write_intercept_heap
+.align 128
+_write_intercept_heap:
+.word 0xbabecafe
+.align 128

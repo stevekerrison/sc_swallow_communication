@@ -118,5 +118,6 @@ void outByte(unsigned c, unsigned char val);
 void ledOut(unsigned v);
 unsigned getRemoteChanendId(chanend c);
 unsigned getLocalChanendId(chanend c);
+int _write_intercept_asm(unsigned notused, char buf[], unsigned len);
 
 #endif //_MCSC_CHAN_H

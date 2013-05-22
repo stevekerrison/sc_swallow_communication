@@ -42,9 +42,10 @@ void io_redirect(void)
   unsigned tgt,rpl;
   unsigned instr;
   int offset;
+  //_write_intercept_asm();
   asm("ldap r11,_write\n"
     "mov %0,r11\n"
-    "ldap r11,_write_intercept\n"
+    "ldap r11,_write_intercept_asm\n"
     "mov %1,r11\n"
     :"=r"(tgt),"=r"(rpl)::"r11");
   offset = rpl - tgt - 4;
