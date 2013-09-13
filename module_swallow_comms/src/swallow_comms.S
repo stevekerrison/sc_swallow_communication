@@ -345,19 +345,95 @@ endTransactionClient:
 	retsp 0x0
 .cc_bottom endTransactionClient.elim
 
+.cc_top startBurstClient.elim, startBurstClient
+.globl startBurstClient
+.global startBurstClient.nstackwords
+.linkset startBurstClient.nstackwords, 0
+.global startBurstClient.maxtimers
+.linkset startBurstClient.maxtimers, 0
+.global startBurstClient.maxchanends
+.linkset startBurstClient.maxchanends, 0
+.global startBurstClient.maxthreads
+.linkset startBurstClient.maxthreads, 1
+.align 4
+startBurstClient:
+	stw r4,sp[1]
+	setd res[r0],r1
+	out res[r0],r0
+	out res[r0],r2
+	out res[r0],r3
+	retsp 0x0
+.cc_bottom startBurstClient.elim
+
+.cc_top endBurstClient.elim, endBurstClient
+.globl endBurstClient
+.global endBurstClient.nstackwords
+.linkset endBurstClient.nstackwords, 0
+.global endBurstClient.maxtimers
+.linkset endBurstClient.maxtimers, 0
+.global endBurstClient.maxchanends
+.linkset endBurstClient.maxchanends, 0
+.global endBurstClient.maxthreads
+.linkset endBurstClient.maxthreads, 1
+.align 4
+endBurstClient:
+	outct res[r0],0x1
+	retsp 0x0
+.cc_bottom endBurstClient.elim
+
+.cc_top startBurstServer.elim, startBurstServer
+.globl startBurstServer
+.global startBurstServer.nstackwords
+.linkset startBurstServer.nstackwords, 2
+.global startBurstServer.maxtimers
+.linkset startBurstServer.maxtimers, 0
+.global startBurstServer.maxchanends
+.linkset startBurstServer.maxchanends, 0
+.global startBurstServer.maxthreads
+.linkset startBurstServer.maxthreads, 1
+.align 4
+startBurstServer:
+  entsp 0x1
+  stw r3,sp[0]
+  in r3,res[r0]
+  stw r3,r1[0]
+  in r3,res[r0]
+  stw r3,r2[0]
+  in r0,res[r0]
+  ldw r3,sp[0]
+  stw r0,r3[0]
+	retsp 0x1
+.cc_bottom startBurstServer.elim
+
+.cc_top endBurstServer.elim, endBurstServer
+.globl endBurstServer
+.global endBurstServer.nstackwords
+.linkset endBurstServer.nstackwords, 0
+.global endBurstServer.maxtimers
+.linkset endBurstServer.maxtimers, 0
+.global endBurstServer.maxchanends
+.linkset endBurstServer.maxchanends, 0
+.global endBurstServer.maxthreads
+.linkset endBurstServer.maxthreads, 1
+.align 4
+endBurstServer:
+	chkct res[r0],0x1
+	retsp 0x0
+.cc_bottom endBurstServer.elim
+
 .cc_top startTransactionServer.elim, startTransactionServer
 .globl startTransactionServer
 .global startTransactionServer.nstackwords
 .linkset startTransactionServer.nstackwords, 3
 .global startTransactionServer.maxtimers
 .linkset startTransactionServer.maxtimers, 0
-.global startTransactionServer.maxchanstarts
-.linkset startTransactionServer.maxchanstarts, 0
+.global startTransactionServer.maxchanends
+.linkset startTransactionServer.maxchanends, 0
 .global startTransactionServer.maxthreads
 .linkset startTransactionServer.maxthreads, 1
 .align 4
 startTransactionServer:
-  entsp 0x1
+  entsp 0x2
   stw r4,sp[1]
   in r4,res[r0]
   setd res[r0],r4
@@ -368,7 +444,7 @@ startTransactionServer:
   in r4,res[r0]
   stw r4,r3[0]
   ldw r4,sp[1]
-	retsp 0x1
+	retsp 0x2
 .cc_bottom startTransactionServer.elim
 
 

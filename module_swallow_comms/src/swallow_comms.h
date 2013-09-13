@@ -94,8 +94,14 @@ void endTransactionClient(streaming chanend c);
 #pragma select handler
 void startTransactionServer(streaming chanend c, unsigned &dst, unsigned &format, unsigned &length);
 void endTransactionServer(streaming chanend c);
-void fixupStreamingChanNode(streaming chanend c);
+#pragma select handler
+void startBurstServer(streaming chanend c, unsigned &dst, unsigned &format, unsigned &length);
+void endBurstServer(streaming chanend c);
+int startBurstClient(streaming chanend c, unsigned dst, char format, unsigned length);
+void endBurstClient(streaming chanend c);
 
+
+void fixupStreamingChanNode(streaming chanend c);
 
 unsigned getLocalStreamingChanendId(streaming chanend c);
 unsigned getRemoteStreamingChanendId(streaming chanend c);
