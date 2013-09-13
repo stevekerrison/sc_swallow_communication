@@ -357,7 +357,6 @@ endTransactionClient:
 .linkset startBurstClient.maxthreads, 1
 .align 4
 startBurstClient:
-	stw r4,sp[1]
 	setd res[r0],r1
 	out res[r0],r0
 	out res[r0],r2
